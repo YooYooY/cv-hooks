@@ -12,10 +12,10 @@ import {
  * @params initSate 初始化state
  * @return [state, setCVState]
  */
-export const useCVState = (initState) => {
+export const useCbState = (initState) => {
   const [state, setState] = useState(initState)
   let isUpdate = useRef()
-  const setCVState = (state, cb) => {
+  const setCbState = (state, cb) => {
     setState((prev) => {
       isUpdate.current = cb
       return typeof state === 'function' ? state(prev) : state
@@ -27,7 +27,7 @@ export const useCVState = (initState) => {
     }
   })
 
-  return [state, setCVState]
+  return [state, setCbState]
 }
 
 /*
@@ -133,6 +133,7 @@ export const useScroll = (scrollRef) => {
 
 /*
  * describe toggle 显示隐藏
+ * https://usehooks.com/useToggle/
  *
  * @return [state, toggle]
  *
@@ -472,7 +473,7 @@ export const useOnClickOutside = (ref, handler) => {
 }
 
 /*
- * describe 鼠标移入移除事件
+ * describe 鼠标hover事件
  * https://usehooks.com/useHover/
  *
  * @return [hoverRef, isHovered]
