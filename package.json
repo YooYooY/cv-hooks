@@ -1,0 +1,9 @@
+{
+  "name": "hooks",
+  "version": "1.0.0",
+  "description": "自定义hooks整理",
+  "main": "index.js",
+  "scripts": {},
+  "author": "YooYooY",
+  "license": "ISC"
+}
