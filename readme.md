@@ -24,14 +24,14 @@ const asyncfn = ()=> fetch(url).then(res=>res.json)
 const [cancel] = useDebounce(
     async ()=>{
         const res = await asyncfn();
-    }, 
-    3000, 
+    },
+    3000,
     []
 )
 
 return (<input value={value} onChange={(e)=>setValue(e.target.value)} >)
 ```
-  
+
 ## useThrottle
 
 > 节流函数
@@ -79,7 +79,7 @@ const Home = (props) => {
 ```js
 function App() {
     const [isTextChanged, setIsTextChanged] = useToggle();
-    
+
     return (
         <button onClick={setIsTextChanged}>{isTextChanged ? 'Toggled' : 'Click to Toggle'}</button>
     );
@@ -93,19 +93,19 @@ function App() {
 ```js
 function App({ obj }) {
   const [state, setState] = useState();
-  
+
   const objFinal = useMemoCompare(obj, (prev, next) => {
     return prev && prev.id === next.id;
   });
-  
+
   useEffect(() => {
     return objFinal.someMethod().then((value) => setState(value));
   }, [objFinal]);
-  
+
   useEffect(() => {
     return obj.someMethod().then((value) => setState(value));
   }, [obj.id]);
-  
+
   return <div> ... </div>;
 }
 ```
@@ -245,7 +245,7 @@ function App() {
   const sadPress = useKeyPress("s");
   const robotPress = useKeyPress("r");
   const foxPress = useKeyPress("f");
-  
+
   return (
     <div>
       <div>h, s, r, f</div>
@@ -334,9 +334,9 @@ export const usePrevious = (value) => {
 ```js
 function App() {
   const ref = useRef();
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
-  
+
   useOnClickOutside(ref, () => setModalOpen(false));
   return (
     <div>
@@ -352,7 +352,7 @@ function App() {
 }
 ```
 
-## useHover 
+## useHover
 
 > 鼠标hover事件
 
@@ -381,4 +381,27 @@ function App() {
     </div>
   );
 }
+```
+
+## useMountedRef
+
+判断当前组件是否已经卸载，有时候异步请求的响应结果较慢，
+
+使用场景：
+在异步请求中，获取到响应结果后使用`setState`方法改变当前state数据，
+然而组件可能在数据请求的过程中已经卸载，这时候触发`setState`的更新可能会导致异常。
+
+```ts
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  return mountedRef;
+};
 ```
